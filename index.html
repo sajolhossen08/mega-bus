@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Ticket</title>
+    <!-- online link -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+
+        <div class="booking-content">
+            <h1>Mega City Bus</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                scrambled it to make a type specimen book.</p>
+        </div>
+
+
+        <div class="booking-form">
+            <div id="booking-description">
+                <h3>Explore By Bus</h3>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="">From</label>
+                        <input class="inp-style" type="text" name="" placeholder="Dhaka">
+                    </div>
+                    <div class="input-group">
+                        <label for="">From</label>
+                        <input class="inp-style" type="text" name="" placeholder="Chittagong">
+                    </div>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="">Departure</label>
+                        <input class="inp-style" type="date" name="">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Return</label>
+                        <input class="inp-style" type="date" name="">
+                    </div>
+                </div>
+
+
+
+                <!-- First Class Section -->
+                <div class="inputs">
+                    <div class="input-group f-class class-divider-line">
+                        <div>
+                            <label for="">First Class ($150)</label>
+                            <div class="f-class">
+                                <button onclick="handleTicketChange('first', false)" class="btn btn-default"><i
+                                        class="fas fa-minus"></i></button>
+                                <input id="first-count" type="text" class="form-control text-center" value="0">
+                                <button onclick="handleTicketChange('first', true)" class="btn btn-default"><i
+                                        class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Economy Section -->
+                    <div class="input-group f-class">
+                        <div>
+                            <label for="">Economy ($100)</label>
+                            <div class="f-class">
+                                <button onclick="handleTicketChange('economy', false)" class="btn btn-default"><i
+                                        class="fas fa-minus"></i></button>
+                                <input id="economy-count" type="text" class="form-control text-center" value="0">
+                                <button onclick="handleTicketChange('economy', true)" class="btn btn-default"><i
+                                        class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- Calculation Section -->
+                <div class="calculations total-calculation">
+                    <div class="row">
+
+                        <div class="col-md-8">
+                            <h5>Subtotal: </h5>
+                            <h5>Tax (charge 10% VAT):</h5>
+                            <hr>
+                            <h5>Total:</h5>
+                        </div>
+
+                        <div class="col-md-4 status">
+                            <h5 id="subtotal-price">$0</h5>
+                            <h5 id="tax-amount">$0</h5>
+                            <hr>
+                            <h5 id="total-amount">$0</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-now-btn">
+                    <button id="btn-style">Book Now</button>
+                </div>
+            </div>
+            <div id="booking-massage" class="text-center">
+                <div id="successful">
+                    <h1>Thank You</h1>
+                    <h5>You have successfully done your booking.</h5>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            function handleTicketChange(ticket, isIncrease) {
+                const TicketInput = document.getElementById(ticket + '-count');
+                const TicketCount = parseInt(TicketInput.value);
+                let TicketNewCount = TicketCount;
+                if (isIncrease == true) {
+                    TicketNewCount = TicketCount + 1;
+                }
+                if (isIncrease == false && TicketCount > 0) {
+                    TicketNewCount = TicketCount - 1;
+                }
+                TicketInput.value = TicketNewCount;
+                calculateSubTotalPrice();
+            }
+
+
+            function calculateSubTotalPrice() {
+                const firstInput = document.getElementById('first-count');
+                const firstCount = parseInt(firstInput.value);
+
+                const economyInput = document.getElementById('economy-count');
+                const economyCount = parseInt(economyInput.value);
+
+                const subTotalPrice = firstCount * 150 + economyCount * 100;
+                document.getElementById('subtotal-price').innerText = '$' + subTotalPrice;
+
+                const taxAmount = subTotalPrice * 0.1;
+                document.getElementById('tax-amount').innerText = '$' + taxAmount;
+
+                const totalAmount = subTotalPrice + taxAmount;
+                document.getElementById('total-amount').innerText = '$' + totalAmount;
+            }
+
+            // After clicking book now btn 
+            const bookingBtn = document.getElementById('btn-style');
+            bookingBtn.addEventListener('click', function () {
+                const bookingDescription = document.getElementById('booking-description');
+                bookingDescription.style.display = "none";
+                const bookingMassage = document.getElementById('booking-massage');
+                bookingMassage.style.display = "block";
+            })
+
+        </script>
+    </main>
+
+    <!--Thank You-->
+</body>
+
+</html>
